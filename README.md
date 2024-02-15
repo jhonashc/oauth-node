@@ -1,6 +1,6 @@
 ## Description
 
-A simple REST API for authentication using Node with Express, Typescript and Prisma ORM.
+A simple REST API with OAuth implementation.
 
 ## Setup:
 
