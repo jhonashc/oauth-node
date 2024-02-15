@@ -6,6 +6,10 @@ A simple REST API with OAuth implementation.
 
 1. Rename `.env.template` to `.env`
 1. Update the environment variables in the `.env` file
+1. Install dependencies
+   ```bash
+   $ npm install
+   ```
 1. Running the app:
 
    ```bash
