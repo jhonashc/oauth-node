@@ -1,36 +1,12 @@
-import axios from "axios";
+import * as oAuthService from "../services/oauth.service.js";
 
-import { envs } from "../config/envs.config.js";
-import { OauthHelper } from "../helpers/oauth.helper.js";
+const oAuth = (req, res, next) => {
+  const body = req.body;
 
-export const oAuth = async (req, res, next) => {
-  const request = {
-    url: envs.OAUTH_ENDPOINT,
-    method: "PUT",
-    body: req.body,
-  };
-
-  const authHeader = OauthHelper.getAuthHeaderForRequest(request);
-
-  axios
-    .put(request.url, request.body, { headers: authHeader })
-    .then(({ data }) => {
-      const { code, message } = data;
-
-      if (code === "003") {
-        throw new Error(message);
-      }
-
-      return data;
-    })
-    .then((data) => {
-      return res.json({
-        status: true,
-        message: "Add a message here",
-        data,
-      });
-    })
-    .catch((error) => {
-      next(error);
-    });
+  oAuthService
+    .oAuth(body)
+    .then((oAuthResponse) => res.json(oAuthResponse))
+    .catch((error) => next(error));
 };
+
+export { oAuth };
