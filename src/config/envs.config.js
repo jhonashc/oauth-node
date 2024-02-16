@@ -1,15 +1,6 @@
-import z from "zod";
+import { envsSchema } from "../schemas/envs.schema.js";
 
-const envSchema = z.object({
-  PORT: z.string(),
-  OAUTH_ENDPOINT: z.string().url(),
-  CONSUMER_KEY: z.string(),
-  CONSUMER_SECRET: z.string(),
-  TOKEN_KEY: z.string(),
-  TOKEN_SECRET: z.string(),
-});
-
-const envServer = envSchema.safeParse({
+const envServer = envsSchema.safeParse({
   PORT: process.env.PORT,
   OAUTH_ENDPOINT: process.env.OAUTH_ENDPOINT,
   CONSUMER_KEY: process.env.CONSUMER_KEY,
