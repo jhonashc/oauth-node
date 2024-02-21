@@ -7,6 +7,7 @@ const envServer = envsSchema.safeParse({
   CONSUMER_SECRET: process.env.CONSUMER_SECRET,
   TOKEN_KEY: process.env.TOKEN_KEY,
   TOKEN_SECRET: process.env.TOKEN_SECRET,
+  REALM: process.env.REALM,
 });
 
 if (!envServer.success) {
