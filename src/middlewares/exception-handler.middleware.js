@@ -1,10 +1,8 @@
-export const exceptionHandler = (error, req, res, next) => {
-  const errorResponse = error.response;
+import { CustomError } from "../errors/custom.error.js";
 
-  // Axios error
-  if (errorResponse) {
-    const statusCode = errorResponse.status;
-    const message = errorResponse.data.message;
+export const exceptionHandler = (error, req, res, next) => {
+  if (error instanceof CustomError) {
+    const { message, statusCode } = error;
 
     return res.status(statusCode).json({
       status: false,
@@ -13,11 +11,11 @@ export const exceptionHandler = (error, req, res, next) => {
   }
 
   // Default error
-  const errorMessage = error.message;
+  const errorMessage = error.message ?? "Algo salió mal, inténtalo de nuevo más tarde";
 
   // TODO: Add custom errors
   return res.status(500).json({
     status: false,
-    message: errorMessage ?? "Algo salió mal, inténtalo de nuevo más tarde",
+    message: errorMessage,
   });
 };
