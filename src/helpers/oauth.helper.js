@@ -10,7 +10,7 @@ export class OauthHelper {
         key: envs.CONSUMER_KEY,
         secret: envs.CONSUMER_SECRET,
       },
-      realm: "8270048_SB1",
+      realm: envs.REALM,
       signature_method: "HMAC-SHA256",
       hash_function(base_string, key) {
         return crypto
