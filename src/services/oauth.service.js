@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { envs } from "../config/envs.config.js";
+import { CustomError } from "../errors/custom.error.js";
 import { OauthHelper } from "../helpers/oauth.helper.js";
 
 const oAuth = async (createUserDto) => {
@@ -19,12 +20,11 @@ const oAuth = async (createUserDto) => {
   const { code, message } = data;
 
   if (code === "003") {
-    throw new Error(message);
+    throw CustomError.badRequest(message);
   }
 
   return {
     status: true,
-    message: "Add a message here",
     data,
   };
 };
