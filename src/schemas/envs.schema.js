@@ -7,4 +7,5 @@ export const envsSchema = z.object({
   CONSUMER_SECRET: z.string(),
   TOKEN_KEY: z.string(),
   TOKEN_SECRET: z.string(),
+  REALM: z.string(),
 });
