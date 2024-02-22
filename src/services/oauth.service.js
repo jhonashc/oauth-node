@@ -4,29 +4,31 @@ import { envs } from "../config/envs.config.js";
 import { CustomError } from "../errors/custom.error.js";
 import { OauthHelper } from "../helpers/oauth.helper.js";
 
-const oAuth = async (createUserDto) => {
-  const request = {
-    url: envs.OAUTH_ENDPOINT,
-    method: "PUT",
-    body: createUserDto,
-  };
+export class OAuthService {
+  constructor() {}
 
-  const authHeader = OauthHelper.getAuthHeaderForRequest(request);
+  async oAuth(createUserDto) {
+    const request = {
+      url: envs.OAUTH_ENDPOINT,
+      method: "PUT",
+      body: createUserDto,
+    };
 
-  const { data } = await axios.put(request.url, request.body, {
-    headers: authHeader,
-  });
+    const authHeader = OauthHelper.getAuthHeaderForRequest(request);
 
-  const { code, message } = data;
+    const { data } = await axios.put(request.url, request.body, {
+      headers: authHeader,
+    });
 
-  if (code === "003") {
-    throw CustomError.badRequest(message);
+    const { code, message } = data;
+
+    if (code === "003") {
+      throw CustomError.badRequest(message);
+    }
+
+    return {
+      status: true,
+      data,
+    };
   }
-
-  return {
-    status: true,
-    data,
-  };
-};
-
-export { oAuth };
+}
