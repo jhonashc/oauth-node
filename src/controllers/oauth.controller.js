@@ -1,12 +1,15 @@
-import * as oAuthService from "../services/oauth.service.js";
 
-const oAuth = (req, res, next) => {
-  const body = req.body;
+export class OAuthController {
+  constructor(oAuthService) {
+    this.oAuthService = oAuthService;
+  }
 
-  oAuthService
-    .oAuth(body)
-    .then((oAuthResponse) => res.json(oAuthResponse))
-    .catch((error) => next(error));
-};
+  oAuth = (req, res, next) => {
+    const body = req.body;
 
-export { oAuth };
+    this.oAuthService
+      .oAuth(body)
+      .then((oAuthResponse) => res.status(201).json(oAuthResponse))
+      .catch((error) => next(error));
+  };
+}
