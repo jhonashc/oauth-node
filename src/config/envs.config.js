@@ -1,6 +1,7 @@
 import { envsSchema } from "../schemas/envs.schema.js";
 
 const envServer = envsSchema.safeParse({
+  NODE_ENV: process.env.NODE_ENV,
   PORT: process.env.PORT,
   OAUTH_ENDPOINT: process.env.OAUTH_ENDPOINT,
   CONSUMER_KEY: process.env.CONSUMER_KEY,
