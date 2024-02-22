@@ -1,7 +1,5 @@
-import "./config/envs.config.js";
+import Server from "./app.js";
 
-import app from "./app.js";
+const server = new Server();
 
-app.listen(app.get("port"), () => {
-  console.log("Server listen on port", app.get("port"));
-});
+server.listen();
