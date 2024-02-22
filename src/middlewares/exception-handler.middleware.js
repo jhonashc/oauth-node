@@ -1,3 +1,5 @@
+import { ZodError } from "zod";
+
 import { CustomError } from "../errors/custom.error.js";
 
 export const exceptionHandler = (error, req, res, next) => {
@@ -10,12 +12,17 @@ export const exceptionHandler = (error, req, res, next) => {
     });
   }
 
-  // Default error
-  const errorMessage = error.message ?? "Algo salió mal, inténtalo de nuevo más tarde";
+  if (error instanceof ZodError) {
+    const errors = error.issues.map((issue) => issue.message);
 
-  // TODO: Add custom errors
+    return res.status(400).json({
+      status: false,
+      message: errors.length === 1 ? errors.join("") : errors,
+    });
+  }
+
   return res.status(500).json({
     status: false,
-    message: errorMessage,
+    message: "Algo salió mal, inténtalo de nuevo más tarde",
   });
 };
