@@ -1,9 +1,17 @@
 import { Router } from "express";
 
-import * as oAuthController from "../controllers/oauth.controller.js";
+import { OAuthController } from "../controllers/oauth.controller.js";
+import { OAuthService } from "../services/oauth.service.js";
 
-const router = Router();
+export class OAuthRoutes {
+  static get routes() {
+    const router = Router();
 
-router.put("/", oAuthController.oAuth);
+    const oAuthService = new OAuthService();
+    const oAuthController = new OAuthController(oAuthService);
 
-export default router;
+    router.put("/", oAuthController.oAuth);
+
+    return router;
+  }
+}
